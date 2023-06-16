@@ -3,6 +3,7 @@ import Link from "next/link";
 import { footerLinks } from "@/constants";
 
 const Footer = () => {
+  const year = new Date().getFullYear();
   return (
     <footer className="flex flex-col text-black-100 mt-5 border-t border-gray-100">
       <div className="flx max-md:flex-col flex-wrap justify-between gap-5 sm:px-16 px-6 py-10">
@@ -15,8 +16,8 @@ const Footer = () => {
                 className="object-contain"
                />
                <p className="text-base text-gray-700">
-                  Carhub 2023 <br/>
-                  All rights reseved &copy;
+                Carhub. All rights reverved. <br/>
+                  
                </p>
           </div>
           <div className="footer__links">
@@ -37,6 +38,26 @@ const Footer = () => {
                     }
                   </div>
               ))}
+          </div>
+
+          <div className="flex justify-between items-center flex-wrap mt-10 border-t border-gray-100 sm:px-16 px-6 py-10">
+            <p>Carhub @{year} All rights reseved &copy;</p>
+            <div className="footer__copyrights-link">
+                    <Link
+                      href={"/"}
+                      className="text-gray-500"
+
+                    >
+                      Privacy Policy
+                    </Link>
+                    <Link
+                      href={"/"}
+                      className="text-gray-500"
+
+                    >
+                      Tems of Use
+                    </Link>
+            </div>
           </div>
       </div>
     </footer>
