@@ -1,11 +1,23 @@
+"use client"
 import { SearchManufactureProps } from "@/types"
 import { Combobox, Transition } from "@headlessui/react"
 import Image from "next/image";
-import { Fragment, useState } from "react";
-import { manufacturers } from "@/constants";
+import { Fragment  } from "react"; 
+import { manufacturers } from "@/constants/";
+import { useState } from "react";
 
 const SearchManuFacture = ({manufacture, setManufacture} : SearchManufactureProps) => {
-  const [query, setQuery] = useState();
+  
+  const [query, setQuery] = useState("");
+
+  const filteredManufactures =
+        query === ""
+        ? manufacturers
+        : manufacturers.filter((item) => (
+            item.toLowerCase()
+            .replace(/\s+/g, "")
+            .includes(query.toLowerCase().replace(/\s+/g, "")
+        )));
 
   return (
     <div className="search--manufacturer">
@@ -34,7 +46,14 @@ const SearchManuFacture = ({manufacture, setManufacture} : SearchManufactureProp
                     afterLeave={() => setQuery('')}
                 >
                     <Combobox.Options>
-
+                        {filteredManufactures.length === 0 && query !== "" && (
+                            <Combobox.Option
+                                value={query}
+                                className="search-manufacturer__option"
+                            >
+                                Create "{query}"
+                            </Combobox.Option>
+                        )}
                     </Combobox.Options>
                 </Transition>
             </div>
