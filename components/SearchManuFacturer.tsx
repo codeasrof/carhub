@@ -1,12 +1,12 @@
 "use client"
-import { SearchManufactureProps } from "@/types"
+import { SearchManuFacturerProps } from "@/types"
 import { Combobox, Transition } from "@headlessui/react"
 import Image from "next/image";
 import { Fragment  } from "react"; 
 import { manufacturers } from "@/constants/";
 import { useState } from "react";
 
-const SearchManuFacture = ({manufacture, setManufacture} : SearchManufactureProps) => {
+const SearchManuFacture = ({manufacturer, setManuFacturer} : SearchManuFacturerProps) => {
   
   const [query, setQuery] = useState("");
 
@@ -21,7 +21,7 @@ const SearchManuFacture = ({manufacture, setManufacture} : SearchManufactureProp
 
   return (
     <div className="search--manufacturer">
-        <Combobox>
+        <Combobox value={manufacturer} onChange={setManuFacturer}>
             <div className="relative w-full">
                 <Combobox.Button className="absolute top-[14px]">
                     <Image
@@ -35,7 +35,7 @@ const SearchManuFacture = ({manufacture, setManufacture} : SearchManufactureProp
                 <Combobox.Input 
                     className="search-manufacturer__input"
                     placeholder="Volkswagen"
-                    displayValue={(manufacturer: string) => manufacture}
+                    displayValue={(manufacturer: string) => manufacturer}
                     onChange={(e) => setQuery(e.target.value)}
                 />
                 <Transition
@@ -46,14 +46,30 @@ const SearchManuFacture = ({manufacture, setManufacture} : SearchManufactureProp
                     afterLeave={() => setQuery('')}
                 >
                     <Combobox.Options>
-                        {filteredManufactures.length === 0 && query !== "" && (
+                        {filteredManufactures.map((item) => (
                             <Combobox.Option
-                                value={query}
-                                className="search-manufacturer__option"
+                                key={item}
+                                className={({active}) => `relative search-manufacturer__option ${active ? 'bg-primary-blue text-white' : 'text-gray-900'}`}
+                                value={item}
                             >
-                                Create "{query}"
+                                {({selected, active}) => (
+                                    <>
+                                       <span
+                                        className={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}
+                                       >
+                                            {item}
+                                        </span> 
+
+                                        {selected ? (
+                                            <span
+                                                className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? 'text-white' : 'text-teal-600'}`}
+                                            >
+                                            </span>
+                                        ) : null}
+                                    </>
+                                )}
                             </Combobox.Option>
-                        )}
+                        ))}
                     </Combobox.Options>
                 </Transition>
             </div>
