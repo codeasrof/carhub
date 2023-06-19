@@ -1,8 +1,12 @@
+import { title } from "process"
 
-const SearchBar = () => {
+
+const CustomFilter = ({title}) => {
   return (
-    <div>SearchBar</div>
+    <div>
+      {title}
+    </div>
   )
 }
 
-export default SearchBar
+export default CustomFilter
